@@ -22,6 +22,7 @@
     "packages\\cli"
   ],
   "devDependencies": {
+    "@types/node": "^18.11.9",
     "typescript": "^4.8.4"
   }
 }

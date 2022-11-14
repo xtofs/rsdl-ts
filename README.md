@@ -1,4 +1,4 @@
-# RSDL library in
+# typescript RSDL library 
 
 
 
