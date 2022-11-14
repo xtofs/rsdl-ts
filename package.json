@@ -1,0 +1,27 @@
+{
+  "name": "rsdl-ts",
+  "version": "1.0.0",
+  "description": "https://daveiscoding.com/nodejs-typescript-monorepo-via-npm-workspaces#heading-initialize-the-project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xtofs/rsdl-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xtofs/rsdl-ts/issues"
+  },
+  "homepage": "https://github.com/xtofs/rsdl-ts#readme",
+  "workspaces": [
+    "packages\\rsdl",
+    "packages\\cli"
+  ],
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  }
+}

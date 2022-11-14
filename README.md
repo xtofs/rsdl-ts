@@ -1,3 +1,19 @@
+# RSDL library in
 
 
-https://2ality.com/2021/07/simple-monorepos.html#a-better-solution%3A-npm-workspaces-and-typescript-project-references
+
+## npm monorepo
+https://daveiscoding.com/nodejs-typescript-monorepo-via-npm-workspaces#heading-initialize-the-project
+
+
+first steps how the monorepo was set up
+```bash
+
+npm init -y
+
+npm init -y --scope @rsdl-ts -w packages/rsdl
+npm init -y --scope @rsdl-ts -w packages/cli
+
+npm install @rsdl-ts/rsdl -w @rsdl-ts/cli 
+
+```
