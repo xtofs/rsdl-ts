@@ -2,6 +2,12 @@
 
 
 
+#demo
+
+npx tsc --build
+node packages/cli/dist/index.js
+
+
 ## npm monorepo
 https://daveiscoding.com/nodejs-typescript-monorepo-via-npm-workspaces#heading-initialize-the-project
 
