@@ -33,5 +33,5 @@ service service {
 capabilities {
    OrderItem { GET }
    Order::items { GET }
-   /orders/{id}/items/{id}/product { GET }
+   /orders/{id}/items/{id}/product { PATCH }
 }

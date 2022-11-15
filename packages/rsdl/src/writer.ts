@@ -1,16 +1,6 @@
 import process from "process";
 import fs from "fs";
-import { TextWriter } from "./TextWriter";
-import {
-  Capability,
-  EnumType,
-  Model,
-  ModelCapability,
-  Property,
-  Service,
-  ServiceCapability,
-  StructuredType,
-} from "./model";
+import { Capability, EnumType, Model, ModelCapability, Property, Service, ServiceCapability, StructuredType } from "./model";
 
 export const red = "\x1b[31m";
 export const cls = "\x1b[0m";
@@ -31,11 +21,7 @@ export class ModelWriter {
     w.writeModel(model);
   }
 
-  constructor(
-    public writer: TextWriter,
-    public color: boolean = false,
-  ) {
-  }
+  constructor(public writer: TextWriter, public color: boolean = false) {}
 
   private kw(str: string): string {
     return this.color ? `${red}${str}${cls}` : str;
@@ -72,7 +58,7 @@ export class ModelWriter {
     this.writer.write(`   ${capability.modelPath} { GET }\n`);
   }
   writeServiceCapability(capability: ServiceCapability) {
-    this.writer.write(`   ${capability.servicePath} { GET }\n`);
+    this.writer.write(`   ${capability.servicePath} { ${capability.capability.method} }\n`);
   }
 
   private writeEnum(enumType: EnumType) {
@@ -94,12 +80,8 @@ export class ModelWriter {
 
   private writeProperty(property: Property) {
     const isKey = property.attributes.key ? `${this.kw("key")} ` : "";
-    const typeName = property.attributes.collection
-      ? `[${property.type.ref}]`
-      : property.type.ref;
-    this.writer.write(
-      `    ${isKey}${property.name}: ${typeName}\n`,
-    );
+    const typeName = property.attributes.collection ? `[${property.type.ref}]` : property.type.ref;
+    this.writer.write(`    ${isKey}${property.name}: ${typeName}\n`);
   }
 
   private writeService(service: Service) {
@@ -108,5 +90,17 @@ export class ModelWriter {
       this.writeProperty(property);
     }
     this.writer.write(`}\n\n`);
+  }
+}
+
+// #####################################
+
+import stream from "stream";
+
+class TextWriter {
+  constructor(public writer: stream.Writable, public encoder: TextEncoder = new TextEncoder()) {}
+
+  public write(string: string) {
+    this.writer.write(this.encoder.encode(string));
   }
 }
