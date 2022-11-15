@@ -2,11 +2,12 @@
 import fs from "fs";
 import * as rsdl from "@rsdl-ts/rsdl";
 import { ModelWriter } from "@rsdl-ts/rsdl";
+import { Stopwatch } from "ts-stopwatch";
 
 demoWriter();
 demoScanner();
 
-// ################### scanner
+// ################### writer
 function demoWriter() {
   const model = new rsdl.Model(
     new rsdl.Service("service", [
@@ -54,14 +55,14 @@ function demoWriter() {
     ],
   );
 
-  ModelWriter.writeToStdout(model);
+  // ModelWriter.writeToStdout(model);
   ModelWriter.writeToFile(model, "example.rsdl");
 }
 
 // ################### scanner
 function demoScanner() {
   const text = fs.readFileSync("./example.rsdl", { encoding: "utf8" });
+
   const tokens = [...rsdl.scan(text)];
-  // console.log(tokens.length);
   console.log(tokens.map((t) => t.position + t.value).join(""));
 }
