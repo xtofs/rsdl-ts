@@ -1,74 +1,55 @@
 #!/usr/bin/env node
 import fs from "fs";
-import {
-  BuiltInType,
-  Cardinality,
-  EnumMember,
-  EnumType,
-  Failure,
-  Model,
-  ModelCapability,
-  ModelPath,
-  ModelWriter,
-  PatchCapability,
-  Property,
-  ref,
-  Result,
-  ResultKind,
-  scan,
-  Service,
-  ServiceCapability,
-  ServicePath,
-  StructuredType,
-  Success,
-} from "@rsdl-ts/rsdl";
+import * as rsdl from "@rsdl-ts/rsdl";
+import { ModelWriter } from "@rsdl-ts/rsdl";
 
 demoWriter();
+demoScanner();
 
 // ################### scanner
 function demoWriter() {
-  const model = new Model(
-    new Service("service", [
-      new Property("products", ref("Product"), { collection: true }),
-      new Property("orders", ref("Order"), { collection: true }),
+  const model = new rsdl.Model(
+    new rsdl.Service("service", [
+      new rsdl.Property("products", rsdl.ref("Product"), { collection: true }),
+      new rsdl.Property("orders", rsdl.ref("Order"), { collection: true }),
     ]),
     [
-      new EnumType("Color", [
-        new EnumMember("red", 1),
-        new EnumMember("blue", 2),
+      new rsdl.EnumType("Color", [
+        new rsdl.EnumMember("red", 1),
+        new rsdl.EnumMember("blue", 2),
       ]),
-      new StructuredType("Category", [
-        new Property("id", BuiltInType.Integer, { key: true }),
-        new Property("name", BuiltInType.String),
+      new rsdl.StructuredType("Category", [
+        new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }),
+        new rsdl.Property("name", rsdl.BuiltInType.String),
       ]),
-      new StructuredType("Product", [
-        new Property("id", BuiltInType.Integer, { key: true }),
-        new Property("name", BuiltInType.String),
-        new Property("category", ref("Category")),
+      new rsdl.StructuredType("Product", [
+        new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }),
+        new rsdl.Property("name", rsdl.BuiltInType.String),
+        new rsdl.Property("category", rsdl.ref("Category")),
       ]),
-      new StructuredType("OrderItem", [
-        new Property("id", BuiltInType.Integer, { key: true }),
-        new Property("amount", BuiltInType.Integer),
-        new Property("product", ref("Product")),
+      new rsdl.StructuredType("OrderItem", [
+        new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }),
+        new rsdl.Property("amount", rsdl.BuiltInType.Integer),
+        new rsdl.Property("product", rsdl.ref("Product")),
       ]),
-      new StructuredType("Order", [
-        new Property("id", BuiltInType.Integer, { key: true }),
-        new Property("items", ref("OrderItem"), { collection: true }),
+      new rsdl.StructuredType("Order", [
+        new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }),
+        new rsdl.Property("items", rsdl.ref("OrderItem"), { collection: true }),
       ]),
     ],
     [
-      new ModelCapability(
-        new ModelPath("OrderItem"),
+      new rsdl.ModelCapability(
+        new rsdl.ModelPath("OrderItem"),
         {},
-        new PatchCapability(),
+        new rsdl.PatchCapability(),
       ),
-      new ModelCapability(new ModelPath("Order::items"), {
-        cardinality: Cardinality.Multiple,
-      }, new PatchCapability()),
-      new ServiceCapability(
-        new ServicePath("/orders/{id}/items/{id}/product"),
+      new rsdl.ModelCapability(new rsdl.ModelPath("Order::items"), {
+        cardinality: rsdl.Cardinality.Multiple,
+      }, new rsdl.PatchCapability()),
+      new rsdl.ServiceCapability(
+        new rsdl.ServicePath("/orders/{id}/items/{id}/product"),
         {},
-        new PatchCapability(),
+        new rsdl.PatchCapability(),
       ),
     ],
   );
@@ -80,7 +61,7 @@ function demoWriter() {
 // ################### scanner
 function demoScanner() {
   const text = fs.readFileSync("./example.rsdl", { encoding: "utf8" });
-  const tokens = [...scan(text)];
+  const tokens = [...rsdl.scan(text)];
   // console.log(tokens.length);
   console.log(tokens.map((t) => t.position + t.value).join(""));
 }
