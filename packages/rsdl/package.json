@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/xtofs/rsdl-ts/issues"
   },
-  "homepage": "https://github.com/xtofs/rsdl-ts#readme"
+  "homepage": "https://github.com/xtofs/rsdl-ts#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.9"
+  }
 }

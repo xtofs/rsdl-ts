@@ -1,5 +1,4 @@
-
-import stream from 'stream';
+import stream from "stream";
 
 export class TextWriter {
   constructor(

@@ -1,4 +1,6 @@
-import { TextWriter } from "./TextWriter.ts";
+import process from "process";
+import fs from "fs";
+import { TextWriter } from "./TextWriter";
 import {
   Capability,
   EnumType,
@@ -8,23 +10,23 @@ import {
   Service,
   ServiceCapability,
   StructuredType,
-} from "./model.ts";
+} from "./model";
 
 export const red = "\x1b[31m";
 export const cls = "\x1b[0m";
 
 export class ModelWriter {
   static writeToFile(model: Model, path: string) {
-    const f: Deno.WriterSync = Deno.openSync(path, {
-      write: true,
-      create: true,
+    // https://nodejs.org/api/fs.html#fscreatewritestreampath-options
+    const f: fs.WriteStream = fs.createWriteStream(path, {
+      flags: "w",
     });
     const w = new ModelWriter(new TextWriter(f), false);
     w.writeModel(model);
   }
 
   static writeToStdout(model: Model, color = true) {
-    const f = Deno.stdout;
+    const f = process.stdout;
     const w = new ModelWriter(new TextWriter(f), color);
     w.writeModel(model);
   }
