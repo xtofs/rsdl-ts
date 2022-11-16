@@ -1,11 +1,45 @@
 #!/usr/bin/env node
 import fs from "fs";
 import * as rsdl from "@rsdl-ts/rsdl";
-import { ModelWriter, Permission } from "@rsdl-ts/rsdl";
-import { escapeControl } from "@rsdl-ts/rsdl";
+import {
+  any,
+  escapeControlChars,
+  expect,
+  many,
+  ModelWriter,
+  parseModel,
+  Permission,
+  Token,
+} from "@rsdl-ts/rsdl";
 
 // demoWriter();
-demoScanner();
+// demoScanner();
+
+// ################### parsing tests
+
+export function test2(tokens: Token[]): rsdl.ParseResult<Token[]> {
+  const parse = many(expect("ident"));
+  return parse(tokens);
+}
+function show<T>(items: T[], f: (t: T) => string) {
+  return "[" + items.map(f).join(", ") + "]";
+}
+
+const text = "hello world.";
+const tokens = [...rsdl.scan(text, true)];
+console.log("tokens =", tokens.map((t) => `'${t.value}'`).join(", "));
+const res = test2(tokens);
+if (res.kind == rsdl.ResultKind.Success) {
+  console.log(
+    "result=    ",
+    show(res.value.result, (t) => t.value),
+  );
+
+  console.log(
+    "remainder= ",
+    show(res.value.remainder, (t) => t.value),
+  );
+}
 
 // ################### writer
 function demoWriter() {
@@ -63,14 +97,14 @@ function demoWriter() {
 
 // ################### scanner
 function demoScanner() {
-  const tokens = fs.readFileSync("./example.rsdl", { encoding: "utf8" });
+  const text = fs.readFileSync("./example.rsdl", { encoding: "utf8" });
 
   // const arr = [...rsdl.scan(tokens)];
   // console.log(arr.map((t) => t.position + t.value).join(""));
-  for (var token of rsdl.scan(tokens)) {
+  for (var token of rsdl.scan(text)) {
     const k = token.kind.padEnd(12);
     const p = token.position.toString().padEnd(4);
-    const v = escapeControl(token.value);
+    const v = escapeControlChars(token.value);
     console.log(`${k} ${p}: '${v}'`);
   }
 }
