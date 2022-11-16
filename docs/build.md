@@ -1,13 +1,16 @@
 # demo
 
-npx tsc --build
+```bash
+npx tsc --build && node packages/cli/dist/index.js
+```
 
- node packages/cli/dist/index.js
-
+```bash
+npm run demo
+```
 
 ## npm monorepo
 
-first steps how the monorepo was set up
+first steps used to set up the monorepo
 
 https://daveiscoding.com/nodejs-typescript-monorepo-via-npm-workspaces#heading-initialize-the-project
 
