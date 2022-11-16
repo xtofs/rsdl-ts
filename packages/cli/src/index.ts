@@ -25,18 +25,18 @@ function show<T>(items: T[], f: (t: T) => string) {
   return "[" + items.map(f).join(", ") + "]";
 }
 
-const text = "hello world.";
+const text = "hello world 1234.";
 const tokens = [...rsdl.scan(text, true)];
-console.log("tokens =", tokens.map((t) => `'${t.value}'`).join(", "));
+console.log("tokens    =", show(tokens, (t) => t.value));
 const res = test2(tokens);
 if (res.kind == rsdl.ResultKind.Success) {
   console.log(
-    "result=    ",
+    "result    =",
     show(res.value.result, (t) => t.value),
   );
 
   console.log(
-    "remainder= ",
+    "remainder =",
     show(res.value.remainder, (t) => t.value),
   );
 }
