@@ -1,7 +1,7 @@
 {
   "name": "rsdl-ts",
   "version": "1.0.0",
-  "description": "https://daveiscoding.com/nodejs-typescript-monorepo-via-npm-workspaces#heading-initialize-the-project",
+  "description": "rsdl in typescript",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

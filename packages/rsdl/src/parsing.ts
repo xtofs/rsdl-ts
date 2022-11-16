@@ -1,7 +1,7 @@
 import { Model, Service } from "./model";
 import { Result, ResultKind, Success } from "./results";
 
-const TOKEN_KIND = ["ident", "whitespace", "number", "symbol"] as const;
+const TOKEN_KIND = ["whitespace", "ident", "number", "symbol"] as const;
 const regex = /(\s+)|([a-zA-Z][\w]*)|([0-9]+)|([,.:{}()\[\]/])/y;
 
 type TokenKind = typeof TOKEN_KIND[number];
@@ -34,6 +34,16 @@ export function parse(text: string): Model {
       // TODO ensure remainder is empty
       return res.value[0];
   }
+}
+
+export function escapeStr(str: string): string {
+  // https://unicode-table.com/en/blocks/control-pictures/
+  let res = "";
+  for (let index = 0; index < str.length; index++) {
+    const code = str.charCodeAt(index);
+    res += String.fromCharCode(code <= 33 ? code + 0x2400 : code);
+  }
+  return res;
 }
 
 export function parseModel(_tokens: Token[]): Result<[Model, Token[]], Error> {

@@ -2,17 +2,27 @@
 import fs from "fs";
 import * as rsdl from "@rsdl-ts/rsdl";
 import { ModelWriter, Permission } from "@rsdl-ts/rsdl";
+import { escapeStr as controlEscape } from "@rsdl-ts/rsdl";
 
-demoWriter();
-// demoScanner();
+// demoWriter();
+demoScanner();
 
 // ################### writer
 function demoWriter() {
   const model = new rsdl.Model(
-    new rsdl.Service("service", [new rsdl.Property("products", rsdl.ref("Product"), { collection: true }), new rsdl.Property("orders", rsdl.ref("Order"), { collection: true })]),
+    new rsdl.Service("service", [
+      new rsdl.Property("products", rsdl.ref("Product"), { collection: true }),
+      new rsdl.Property("orders", rsdl.ref("Order"), { collection: true }),
+    ]),
     [
-      new rsdl.EnumType("Color", [new rsdl.EnumMember("red", 1), new rsdl.EnumMember("blue", 2)]),
-      new rsdl.StructuredType("Category", [new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }), new rsdl.Property("name", rsdl.BuiltInType.String)]),
+      new rsdl.EnumType("Color", [
+        new rsdl.EnumMember("red", 1),
+        new rsdl.EnumMember("blue", 2),
+      ]),
+      new rsdl.StructuredType("Category", [
+        new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }),
+        new rsdl.Property("name", rsdl.BuiltInType.String),
+      ]),
       new rsdl.StructuredType("Product", [
         new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }),
         new rsdl.Property("name", rsdl.BuiltInType.String),
@@ -23,7 +33,10 @@ function demoWriter() {
         new rsdl.Property("amount", rsdl.BuiltInType.Integer),
         new rsdl.Property("product", rsdl.ref("Product")),
       ]),
-      new rsdl.StructuredType("Order", [new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }), new rsdl.Property("items", rsdl.ref("OrderItem"), { collection: true })]),
+      new rsdl.StructuredType("Order", [
+        new rsdl.Property("id", rsdl.BuiltInType.Integer, { key: true }),
+        new rsdl.Property("items", rsdl.ref("OrderItem"), { collection: true }),
+      ]),
     ],
     [
       new rsdl.ModelCapability("OrderItem", {}, new rsdl.PatchCapability()),
@@ -32,10 +45,16 @@ function demoWriter() {
         {
           cardinality: rsdl.Cardinality.Multiple,
         },
-        new rsdl.GetCapability()
+        new rsdl.GetCapability(),
       ),
-      new rsdl.ServiceCapability("/orders/{id}/items/{id}/product", {}, new rsdl.PatchCapability(true, false, [new Permission("scheme", [{ scope: "read" }])])),
-    ]
+      new rsdl.ServiceCapability(
+        "/orders/{id}/items/{id}/product",
+        {},
+        new rsdl.PatchCapability(true, false, [
+          new Permission("scheme", [{ scope: "read" }]),
+        ]),
+      ),
+    ],
   );
 
   ModelWriter.writeToStdout(model);
@@ -44,8 +63,11 @@ function demoWriter() {
 
 // ################### scanner
 function demoScanner() {
-  const text = fs.readFileSync("./example.rsdl", { encoding: "utf8" });
+  const tokens = fs.readFileSync("./example.rsdl", { encoding: "utf8" });
 
-  const tokens = [...rsdl.scan(text)];
-  console.log(tokens.map((t) => t.position + t.value).join(""));
+  // const arr = [...rsdl.scan(tokens)];
+  // console.log(arr.map((t) => t.position + t.value).join(""));
+  for (var token of rsdl.scan(tokens)) {
+    console.log(`${token.kind.padEnd(12)}: '${controlEscape(token.value)}'`);
+  }
 }
