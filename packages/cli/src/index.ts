@@ -2,7 +2,7 @@
 import fs from "fs";
 import * as rsdl from "@rsdl-ts/rsdl";
 import { ModelWriter, Permission } from "@rsdl-ts/rsdl";
-import { escapeStr as controlEscape } from "@rsdl-ts/rsdl";
+import { escapeControl } from "@rsdl-ts/rsdl";
 
 // demoWriter();
 demoScanner();
@@ -68,6 +68,9 @@ function demoScanner() {
   // const arr = [...rsdl.scan(tokens)];
   // console.log(arr.map((t) => t.position + t.value).join(""));
   for (var token of rsdl.scan(tokens)) {
-    console.log(`${token.kind.padEnd(12)}: '${controlEscape(token.value)}'`);
+    const k = token.kind.padEnd(12);
+    const p = token.position.toString().padEnd(4);
+    const v = escapeControl(token.value);
+    console.log(`${k} ${p}: '${v}'`);
   }
 }

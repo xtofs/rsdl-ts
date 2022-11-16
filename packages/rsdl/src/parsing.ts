@@ -36,7 +36,7 @@ export function parse(text: string): Model {
   }
 }
 
-export function escapeStr(str: string): string {
+export function escapeControl(str: string): string {
   // https://unicode-table.com/en/blocks/control-pictures/
   let res = "";
   for (let index = 0; index < str.length; index++) {
