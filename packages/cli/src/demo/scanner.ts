@@ -7,7 +7,7 @@ export function main() {
 
   // const arr = [...rsdl.scan(tokens)];
   // console.log(arr.map((t) => t.position + t.value).join(""));
-  for (var token of rsdl.scan(text)) {
+  for (var token of rsdl.scan(text, true)) {
     const k = token.kind.padEnd(12);
     const p = token.position.toString().padEnd(4);
     const v = escapeControlChars(token.value);

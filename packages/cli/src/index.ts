@@ -23,6 +23,3 @@ switch (args[0]) {
   default:
     console.log(`no demo named '${args}'`);
 }
-
-// demoWriter();
-// demoScanner();
