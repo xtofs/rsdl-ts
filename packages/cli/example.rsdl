@@ -1,0 +1,37 @@
+enum Color {
+    red
+    blue
+}
+
+type Category {
+    key id: Integer
+    name: String
+}
+
+type Product {
+    key id: Integer
+    name: String
+    category: Category
+}
+
+type OrderItem {
+    key id: Integer
+    amount: Integer
+    product: Product
+}
+
+type Order {
+    key id: Integer
+    items: [OrderItem]
+}
+
+service service {
+    products: [Product]
+    orders: [Order]
+}
+
+capabilities {
+   OrderItem { GET }
+   Order::items { GET }
+   /orders/{id}/items/{id}/product { PATCH }
+}

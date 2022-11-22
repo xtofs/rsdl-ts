@@ -3,7 +3,7 @@
 ## demo
 
 ```bash
-npm run demo
+npm run demo -- scanner|parser|writer
 ```
 
 ## capabilities
