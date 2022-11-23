@@ -9,8 +9,7 @@ export class Model {
   ) {}
 }
 
-export type ModelElement = StructuredType | EnumType;
-
+/** structural elements of a model i.e. elements with properties */
 export type Structural = StructuredType | Service;
 
 export class Service {
@@ -18,14 +17,16 @@ export class Service {
   constructor(public alias: string, public properties: Property[]) {}
 }
 
+export type ModelElement = StructuredType | EnumType;
+
 export class StructuredType {
   public kind: "struct" = "struct";
   constructor(public name: string, public properties: Property[]) {}
 }
 
-export function ref(name: string): TypeRef {
-  return name;
-}
+// export function ref(name: string): TypeRef {
+//   return name;
+// }
 
 export type TypeRef = string;
 // export class TypeRef {

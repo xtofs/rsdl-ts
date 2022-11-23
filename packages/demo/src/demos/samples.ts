@@ -9,7 +9,6 @@ import {
   PatchCapability,
   Permission,
   Property,
-  ref,
   Service,
   ServiceCapability,
   StructuredType,
@@ -18,8 +17,8 @@ import {
 export function getModel01() {
   return new Model(
     new Service("service", [
-      new Property("products", ref("Product"), { collection: true }),
-      new Property("orders", ref("Order"), { collection: true }),
+      new Property("products", "Product", { collection: true }),
+      new Property("orders", "Order", { collection: true }),
     ]),
     [
       new EnumType("Color", [
@@ -33,16 +32,16 @@ export function getModel01() {
       new StructuredType("Product", [
         new Property("id", BuiltInType.Integer, { key: true }),
         new Property("name", BuiltInType.String),
-        new Property("category", ref("Category")),
+        new Property("category", "Category"),
       ]),
       new StructuredType("OrderItem", [
         new Property("id", BuiltInType.Integer, { key: true }),
         new Property("amount", BuiltInType.Integer),
-        new Property("product", ref("Product")),
+        new Property("product", "Product"),
       ]),
       new StructuredType("Order", [
         new Property("id", BuiltInType.Integer, { key: true }),
-        new Property("items", ref("OrderItem"), { collection: true }),
+        new Property("items", "OrderItem", { collection: true }),
       ]),
     ],
     [

@@ -1,7 +1,11 @@
 {
   "files": [],
   "references": [
-    { "path": "packages/rsdl" },
-    { "path": "packages/cli" },
+    {
+      "path": "packages/rsdl"
+    },
+    {
+      "path": "packages/demo"
+    },
   ]
 }

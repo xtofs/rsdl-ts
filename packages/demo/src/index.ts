@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import * as demo from "./demo";
+import * as demo from "./demos";
 
 const args = process.argv.slice(2);
 if (args.length == 0) {
@@ -22,4 +22,5 @@ switch (args[0]) {
     break;
   default:
     console.log(`no demo named '${args}'`);
+    console.log(`available demos: ${Object.keys(demo).join(", ")}`);
 }

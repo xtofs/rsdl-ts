@@ -1,11 +1,7 @@
 # demo
 
 ```bash
-npx tsc --build && node packages/cli/dist/index.js
-```
-
-```bash
-npm run demo
+npm run demo -- paths
 ```
 
 ## npm monorepo
@@ -18,7 +14,7 @@ https://daveiscoding.com/nodejs-typescript-monorepo-via-npm-workspaces#heading-i
 npm init -y
 
 npm init -y --scope @rsdl-ts -w packages/rsdl
-npm init -y --scope @rsdl-ts -w packages/cli
+npm init -y --scope @rsdl-ts -w packages/demo
 
 npm install @rsdl-ts/rsdl -w @rsdl-ts/cli
 ```
