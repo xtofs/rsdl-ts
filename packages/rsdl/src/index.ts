@@ -3,6 +3,7 @@ export { ModelWriter } from "./writer";
 export { ModelPath, ServicePath } from "./paths";
 export * from "./model";
 export * from "./capabilities";
+export * from "./urls";
 export {
   escapeControlChars,
   expect,
