@@ -14,7 +14,7 @@ import {
   StructuredType,
 } from "@rsdl-ts/rsdl";
 
-export function getModel01() {
+export function getSalesModel() {
   return new Model(
     new Service("service", [
       new Property("products", "Product", { collection: true }),

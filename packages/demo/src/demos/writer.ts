@@ -1,9 +1,9 @@
 import { ModelWriter } from "@rsdl-ts/rsdl";
-import { getModel01 } from "./samples";
+import { getSalesModel } from "./samples";
 
 // ################### writer
 export function main() {
-  const model = getModel01();
+  const model = getSalesModel();
 
   ModelWriter.writeToStdout(model);
   ModelWriter.writeToFile(model, "example.rsdl");

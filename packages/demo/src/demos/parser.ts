@@ -1,5 +1,14 @@
 import * as rsdl from "@rsdl-ts/rsdl";
-import { any, escapeControlChars, expect, many, ModelWriter, parseModel, Permission, Token } from "@rsdl-ts/rsdl";
+import {
+  any,
+  escapeControlChars,
+  expect,
+  many,
+  ModelWriter,
+  parseModel,
+  Permission,
+  Token,
+} from "@rsdl-ts/rsdl";
 
 // ################### parsing tests
 
@@ -17,18 +26,18 @@ export function main() {
   const tokens = [...rsdl.scan(text, true)];
   console.log(
     "tokens    =",
-    show(tokens, (t) => t.value)
+    show(tokens, (t) => t.value),
   );
   const res = testParse(tokens);
   if (res.kind == rsdl.ResultKind.Success) {
     console.log(
       "result    =",
-      show(res.value.result, (t) => t.value)
+      show(res.value.result, (t: Token) => t.value),
     );
 
     console.log(
       "remainder =",
-      show(res.value.remainder, (t) => t.value)
+      show(res.value.remainder, (t: Token) => t.value),
     );
   }
 }

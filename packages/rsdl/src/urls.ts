@@ -1,4 +1,10 @@
-import { BuiltInType, Model, Structural } from "@rsdl-ts/rsdl";
+import {
+  BuiltInType,
+  Model,
+  ModelElement,
+  Property,
+  Structural,
+} from "./model";
 
 export class Segment {
   constructor(
@@ -43,7 +49,7 @@ function* enumeratePaths(
     if (BuiltInType.isBuiltIn(prop.type)) {
       continue;
     }
-    const type = model.elements.find((e) => e.name === prop.type);
+    const type = model.elements.find((e: ModelElement) => e.name === prop.type);
     if (type == undefined) {
       console.error(`unable to resolve type ${prop.type}`);
     } else {
@@ -51,6 +57,15 @@ function* enumeratePaths(
         const seg = new Segment(prop.name, prop.type, prop.isCollection);
         const path = [...prefix, seg];
         yield new Path(path);
+        if (prop.isCollection) {
+          const keys = [...type.properties.filter((p: Property) => p.isKey)];
+          if (keys.length == 1) {
+            const key = keys[0];
+            const keySeg = new Segment(`{${key.name}}`, prop.type, false);
+            const keyPath = [...path, keySeg];
+            yield new Path(keyPath);
+          }
+        }
         yield* enumeratePaths(path, type, model);
       }
     }

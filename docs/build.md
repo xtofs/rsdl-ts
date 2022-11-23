@@ -16,5 +16,5 @@ npm init -y
 npm init -y --scope @rsdl-ts -w packages/rsdl
 npm init -y --scope @rsdl-ts -w packages/demo
 
-npm install @rsdl-ts/rsdl -w @rsdl-ts/cli
+npm install @rsdl-ts/rsdl -w @rsdl-ts/demo
 ```
