@@ -5,12 +5,12 @@ import { ModelPath, ServicePath } from "./paths";
 
 export type Capability = ModelCapability | ServiceCapability;
 
-export enum Cardinality {
+export enum Multiplicity {
   Single,
   Multiple,
 }
 interface CapabilityOpts {
-  cardinality: Cardinality;
+  multiplicity: Multiplicity;
 }
 
 export class ModelCapability {

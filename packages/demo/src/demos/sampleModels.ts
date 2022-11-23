@@ -1,11 +1,11 @@
 import {
   BuiltInType,
-  Cardinality,
   EnumMember,
   EnumType,
   GetCapability,
   Model,
   ModelCapability,
+  Multiplicity,
   PatchCapability,
   Permission,
   Property,
@@ -17,9 +17,9 @@ import {
 export function getSalesModel() {
   return new Model(
     new Service("service", [
+      new Property("categories", "Category", { collection: true }),
       new Property("products", "Product", { collection: true }),
       new Property("orders", "Order", { collection: true }),
-      new Property("categories", "Category", { collection: true }),
     ]),
     [
       new EnumType("Color", [
@@ -33,6 +33,7 @@ export function getSalesModel() {
       new StructuredType("Product", [
         new Property("id", BuiltInType.Integer, { key: true }),
         new Property("name", BuiltInType.String),
+        new Property("color", "Color"),
         new Property("category", "Category"),
       ]),
       new StructuredType("OrderItem", [
@@ -50,7 +51,7 @@ export function getSalesModel() {
       new ModelCapability(
         "Order::items",
         {
-          cardinality: Cardinality.Multiple,
+          multiplicity: Multiplicity.Multiple,
         },
         new GetCapability(),
       ),
