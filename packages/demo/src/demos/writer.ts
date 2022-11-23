@@ -1,5 +1,5 @@
 import { ModelWriter } from "@rsdl-ts/rsdl";
-import { getSalesModel } from "./samples";
+import { getSalesModel } from "./sampleModels";
 
 // ################### writer
 export function main() {

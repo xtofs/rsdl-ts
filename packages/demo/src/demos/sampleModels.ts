@@ -19,6 +19,7 @@ export function getSalesModel() {
     new Service("service", [
       new Property("products", "Product", { collection: true }),
       new Property("orders", "Order", { collection: true }),
+      new Property("categories", "Category", { collection: true }),
     ]),
     [
       new EnumType("Color", [
