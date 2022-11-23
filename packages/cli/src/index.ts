@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
-import * as scanner from "./demo/scanner";
-import * as parser from "./demo/parser";
-import * as writer from "./demo/writer";
+import * as demo from "./demo";
 
 const args = process.argv.slice(2);
 if (args.length == 0) {
@@ -11,15 +9,17 @@ if (args.length == 0) {
 }
 switch (args[0]) {
   case "scanner":
-    scanner.main();
+    demo.scanner.main();
     break;
   case "parser":
-    parser.main();
+    demo.parser.main();
     break;
   case "writer":
-    writer.main();
+    demo.writer.main();
     break;
-
+  case "paths":
+    demo.paths.main();
+    break;
   default:
     console.log(`no demo named '${args}'`);
 }

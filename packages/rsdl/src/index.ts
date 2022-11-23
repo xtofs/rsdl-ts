@@ -2,6 +2,7 @@ export { Failure, Result, ResultKind, Success } from "./results";
 export { ModelWriter } from "./writer";
 export { ModelPath, ServicePath } from "./paths";
 export * from "./model";
+export * from "./capabilities";
 export {
   escapeControlChars,
   expect,

@@ -1,6 +1,7 @@
 import process from "process";
 import fs from "fs";
-import { Capability, EnumType, Model, ModelCapability, Property, Service, ServiceCapability, StructuredType } from "./model";
+import { EnumType, Model, Property, Service, StructuredType } from "./model";
+import { Capability, ModelCapability, ServiceCapability } from "./capabilities";
 
 export const red = "\x1b[31m";
 export const cls = "\x1b[0m";
@@ -58,7 +59,9 @@ export class ModelWriter {
     this.writer.write(`   ${capability.modelPath} { GET }\n`);
   }
   writeServiceCapability(capability: ServiceCapability) {
-    this.writer.write(`   ${capability.servicePath} { ${capability.capability.method} }\n`);
+    this.writer.write(
+      `   ${capability.servicePath} { ${capability.capability.method} }\n`,
+    );
   }
 
   private writeEnum(enumType: EnumType) {
@@ -79,8 +82,10 @@ export class ModelWriter {
   }
 
   private writeProperty(property: Property) {
-    const isKey = property.attributes.key ? `${this.kw("key")} ` : "";
-    const typeName = property.attributes.collection ? `[${property.type.ref}]` : property.type.ref;
+    const isKey = property.isKey ? `${this.kw("key")} ` : "";
+    const typeName = property.isCollection
+      ? `[${property.type}]`
+      : property.type;
     this.writer.write(`    ${isKey}${property.name}: ${typeName}\n`);
   }
 
@@ -98,7 +103,10 @@ export class ModelWriter {
 import stream from "stream";
 
 class TextWriter {
-  constructor(public writer: stream.Writable, public encoder: TextEncoder = new TextEncoder()) {}
+  constructor(
+    public writer: stream.Writable,
+    public encoder: TextEncoder = new TextEncoder(),
+  ) {}
 
   public write(string: string) {
     this.writer.write(this.encoder.encode(string));
