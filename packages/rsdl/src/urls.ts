@@ -36,11 +36,8 @@ export class Path {
   }
 }
 
-export function* paths(model: Model): Generator<Path> {
-  yield* enumeratePaths([], model.service, model);
-}
 
-function* enumeratePaths(
+export function* enumeratePaths(
   prefix: Segment[],
   structural: Structural,
   model: Model,
@@ -58,7 +55,6 @@ function* enumeratePaths(
         const path = [...prefix, seg];
         yield new Path(path);
         if (prop.isCollection) {
-          // console.log("collection: ", prop);
           const keys = [...type.properties.filter((p: Property) => p.isKey)];
           if (keys.length == 1) {
             const key = keys[0];

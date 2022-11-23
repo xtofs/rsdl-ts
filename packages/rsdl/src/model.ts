@@ -1,5 +1,6 @@
 import { stringify } from "querystring";
 import { Capability } from "./capabilities";
+import { enumeratePaths, Path } from "./urls";
 
 export class Model {
   constructor(
@@ -7,6 +8,10 @@ export class Model {
     public elements: ModelElement[],
     public capabilities: Capability[] = [],
   ) {}
+
+  *paths(): Generator<Path> {
+    yield* enumeratePaths([], this.service, this);
+  }
 }
 
 /** structural elements of a model i.e. elements with properties */
